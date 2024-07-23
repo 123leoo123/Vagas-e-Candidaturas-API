@@ -13,7 +13,7 @@ export class UserServices {
             throw new Error("User not found");
         }
 
-        const compare = bcrypt.compare(body.password, user.password);
+        const compare = await bcrypt.compare(body.password, user.password);
 
         if(!compare) {
             throw new Error("Email and Password does not match");

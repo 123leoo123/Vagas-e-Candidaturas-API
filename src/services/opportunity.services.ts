@@ -4,14 +4,16 @@ import { TOpportunity, TOpportunityCreate, TOpportunityUpdate } from "../schemas
 
 @injectable()
 export class OpportunityServices {
-    async create(body: TOpportunityCreate): Promise<TOpportunity>{
-        const data = await prisma.opportunity.create({data: body});
+    async create(body: TOpportunityCreate, userId: number): Promise<TOpportunity>{
+        const newOpportunity = { ...body, userId};
+
+        const data = await prisma.opportunity.create({data: newOpportunity});
 
         return data;
     }
 
-    async findMany(): Promise<TOpportunity[]> {
-        const data = await prisma.opportunity.findMany();
+    async findMany(userId?: number): Promise<TOpportunity[]> {
+        const data = await prisma.opportunity.findMany({where: {userId}});
 
         return data;
     }

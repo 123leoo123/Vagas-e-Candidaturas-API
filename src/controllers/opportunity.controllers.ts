@@ -9,17 +9,23 @@ export class OpportunityControllers {
     constructor(@inject("OpportunityServices") private opportunityServices: OpportunityServices) {}
     
     async create(req: Request, res: Response){
+        const id = res.locals.decode?.id;
        
-
-        const response = await this.opportunityServices.create(req.body);
+        const response = await this.opportunityServices.create(req.body, id);
 
         return res.status(201).json(response);
+        // try {
+        //     const response = await this.opportunityServices.create(req.body, id);
+        //     return res.status(201).json(response);
+        // } catch (error) {
+        //     return res.status(400).json({ error: (error as any).message });
+        // }
     }
 
     async findMany(req: Request, res: Response) {
-       
+        const id = res.locals.decode?.id;
 
-        const response = await this.opportunityServices.findMany();
+        const response = await this.opportunityServices.findMany(id);
 
         return res.status(200).json(response);
     }
