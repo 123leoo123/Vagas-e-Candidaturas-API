@@ -14,10 +14,11 @@ export class ApplicationsControlers {
     }
     
     async findMany(req: Request, res: Response) {
+        
         const applicationsServices = container.resolve(ApplicationsServices);
 
         const response = await applicationsServices.findMany(Number(req.params.id));
-
+        
         return res.status(200).json(response);
     }
 }

@@ -10,9 +10,10 @@ export class OpportunityControllers {
     
     async create(req: Request, res: Response){
         const id = res.locals.decode?.id;
-       
-        const response = await this.opportunityServices.create(req.body, id);
+       console.log(req.body)
 
+        const response = await this.opportunityServices.create(req.body, id);
+        
         return res.status(201).json(response);
         // try {
         //     const response = await this.opportunityServices.create(req.body, id);
@@ -26,7 +27,7 @@ export class OpportunityControllers {
         const id = res.locals.decode?.id;
 
         const response = await this.opportunityServices.findMany(id);
-
+     
         return res.status(200).json(response);
     }
 

@@ -12,16 +12,16 @@ import { IsOpportunityOwner } from "../middleware/isOpportunityOwner.middleware"
 container.registerSingleton("OpportunityServices", OpportunityServices);
 const opportunityControllers = container.resolve(OpportunityControllers);
 
-export const OpportunityRouter = Router();
+export const opportunityRouter = Router();
 
 
-OpportunityRouter.post("/", validateToken.execute, ValidateBody.execute(opportunityCreateSchema), (req, res) => opportunityControllers.create(req, res));
-OpportunityRouter.get("/user", validateToken.execute, IsOpportunityOwner.execute, (req, res) => opportunityControllers.findMany(req, res));
-OpportunityRouter.get("/", (req, res) => opportunityControllers.findMany(req, res))
+opportunityRouter.post("/", ValidateBody.execute(opportunityCreateSchema), validateToken.execute,  (req, res) => opportunityControllers.create(req, res));
+opportunityRouter.get("/user", validateToken.execute, IsOpportunityOwner.execute, (req, res) => opportunityControllers.findMany(req, res));
+opportunityRouter.get("/", (req, res) => opportunityControllers.findMany(req, res))
 
-OpportunityRouter.use("/:id",  IsOportunityIdMiddleware.execute);
-OpportunityRouter.get("/:id", validateToken.execute, (req, res) => opportunityControllers.findOne(req, res));
-OpportunityRouter.patch("/:id", validateToken.execute, ValidateBody.execute(opportunityUpdateSchema), (req, res) => opportunityControllers.update(req,res));
-OpportunityRouter.delete("/:id", validateToken.execute, (req, res) => opportunityControllers.delete(req,res));
+opportunityRouter.use("/:id",  IsOportunityIdMiddleware.execute);
+opportunityRouter.get("/:id", validateToken.execute, (req, res) => opportunityControllers.findOne(req, res));
+opportunityRouter.patch("/:id", validateToken.execute, ValidateBody.execute(opportunityUpdateSchema), (req, res) => opportunityControllers.update(req,res));
+opportunityRouter.delete("/:id", validateToken.execute, (req, res) => opportunityControllers.delete(req,res));
 
-OpportunityRouter.use("/", ApplicationRouter);
+opportunityRouter.use("/", ApplicationRouter);
