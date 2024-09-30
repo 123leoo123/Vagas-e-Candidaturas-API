@@ -3,6 +3,7 @@ import { TUserLoginBody, TUserLoginReturn, TUserRegisterBody, TUserReturn, userR
 import bcrypt from "bcrypt";
 import { prisma } from "../database/prisma";
 import jwt from "jsonwebtoken";
+import { appError } from "../errors/appError";
 
 @injectable()
 export class UserServices {
@@ -10,13 +11,13 @@ export class UserServices {
         const user = await prisma.user.findUnique({where: {email: body.email}});
         
         if(!user) {
-            throw new Error("User not found");
+            throw new appError(404, "User not found");
         }
 
         const compare = await bcrypt.compare(body.password, user.password);
 
         if(!compare) {
-            throw new Error("Email and Password does not match");
+            throw new appError(401, "Email and Password does not match");
         }
 
         const token = jwt.sign({id: user.id}, process.env.JWT_SECRET as string, {expiresIn: "1h"});

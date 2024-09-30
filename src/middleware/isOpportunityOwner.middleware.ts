@@ -11,7 +11,7 @@ export class IsOpportunityOwner{
         const opportunity = await prisma.opportunity.findFirst({ where: { id: Number (opportunityId) }, });
         
         if(opportunity?.userId !== userId){
-           throw new appError(403, "User is not the owner of this opportunity")
+           throw new appError(401, "User is not the owner of this opportunity")
         }
 
         next();

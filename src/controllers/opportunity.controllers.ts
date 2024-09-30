@@ -3,24 +3,39 @@ import { OpportunityServices } from "../services/opportunity.services";
 import { prisma } from "../database/prisma";
 import { container, inject, injectable } from "tsyringe";
 
-
 @injectable()
 export class OpportunityControllers {
-    constructor(@inject("OpportunityServices") private opportunityServices: OpportunityServices) {}
+
+
+    constructor(
+
+        @inject("OpportunityServices") 
+        private opportunityServices: OpportunityServices,
+        
+    ) {}
     
     async create(req: Request, res: Response){
-        const id = res.locals.decode?.id;
+    
+       const id = res.locals.decode?.id;
        console.log(req.body)
 
         const response = await this.opportunityServices.create(req.body, id);
         
-        return res.status(201).json(response);
+        return res.status(201).json(response);      
         // try {
         //     const response = await this.opportunityServices.create(req.body, id);
         //     return res.status(201).json(response);
         // } catch (error) {
         //     return res.status(400).json({ error: (error as any).message });
         // }
+
+        // this.opportunityServices.create(req.body, id).then(
+        //     (ToOportunity) => res.status(201).json(ToOportunity)
+        // ).catch(
+        //     (error) => res.status(400).json({ error: error.message })
+        // ).finally(
+        //     () => console.log("Finalizado")
+        // )
     }
 
     async findMany(req: Request, res: Response) {
