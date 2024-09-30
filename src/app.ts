@@ -25,32 +25,32 @@ app.use(handleErrors.execute);
 
 
 
-// app.get("/auth", (req, res) => {
-//   try {
-//     const token = req.headers.authorization;
+app.get("/auth", (req, res) => {
+  try {
+    const token = req.headers.authorization;
 
-//     const secret = process.env.JWT_SECRET;
+    const secret = process.env.JWT_SECRET;
 
-//     if(token && secret) {
-//       jwt.verify(token, secret);
+    if(token && secret) {
+      jwt.verify(token, secret);
 
-//       const payload = jwt.decode(token);
+      const payload = jwt.decode(token);
 
-//       return res.status(200).json(payload);
-//     }
+      return res.status(200).json(payload);
+    }
 
-//   } catch (error) {
-//     return res.status(403).json(error);
+  } catch (error) {
+    return res.status(403).json(error);
 
-//   }
-// })
+  }
+})
 
-// app.post("/login", (req, res) => {
-//     if (process.env.JWT_SECRET) {
-//       const token = jwt.sign({ id: 1}, process.env.JWT_SECRET, { expiresIn: "12h" });
+app.post("/login", (req, res) => {
+    if (process.env.JWT_SECRET) {
+      const token = jwt.sign({ id: 1}, process.env.JWT_SECRET, { expiresIn: "12h" });
 
-//       return res.status(200).json({ acessToken: token });
-//     }
+      return res.status(200).json({ acessToken: token });
+    }
     
-// })
+})
 

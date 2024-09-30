@@ -26,7 +26,7 @@ export class handleErrors {
   
         if (error instanceof ZodError) {
             return res.status(422).json(error);
-            console.log(error);
+            
         }
         console.log(error);
         
