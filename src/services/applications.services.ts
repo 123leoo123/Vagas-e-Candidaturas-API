@@ -1,7 +1,6 @@
 import { TApplication, TApplicationCreate } from "../schemas/application.schemas";
 import { prisma } from "../database/prisma";
 import { injectable } from "tsyringe";
-import { application } from "express";
 
 @injectable()
 export class ApplicationsServices {

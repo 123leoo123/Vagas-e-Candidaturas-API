@@ -5,6 +5,7 @@ import { ValidateBody } from "../middleware/validateBody.middleware";
 import { userLoginBodySchema, userRegisterBodySchema } from "../schemas/user.schemas";
 import { validateToken } from "../middleware/validateToken.middleware";
 import { userControllers } from "../controllers/user.controllers";
+import { isEmailAlreadyRegistered } from "../middleware/isEmailAlreadyRegistered";
 
 container.registerSingleton("UserServices", UserServices);
 
@@ -12,7 +13,7 @@ const UserControllers = container.resolve(userControllers);
 
 export const userRoutes = Router();
 
-userRoutes.post("/", ValidateBody.execute(userRegisterBodySchema), (req, res) => 
+userRoutes.post("/", isEmailAlreadyRegistered.execute, ValidateBody.execute(userRegisterBodySchema), (req, res) => 
      UserControllers.register(req, res)
 );
 

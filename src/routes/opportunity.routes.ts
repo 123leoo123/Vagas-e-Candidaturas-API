@@ -14,14 +14,11 @@ const opportunityControllers = container.resolve(OpportunityControllers);
 
 export const opportunityRouter = Router();
 
-
 opportunityRouter.post("/", ValidateBody.execute(opportunityCreateSchema), validateToken.execute,  (req, res) => opportunityControllers.create(req, res));
 opportunityRouter.get("/user", validateToken.execute, IsOpportunityOwner.execute, (req, res) => opportunityControllers.findMany(req, res));
 opportunityRouter.get("/", (req, res) => opportunityControllers.findMany(req, res))
-
 opportunityRouter.use("/:id",  IsOportunityIdMiddleware.execute);
 opportunityRouter.get("/:id", validateToken.execute, (req, res) => opportunityControllers.findOne(req, res));
 opportunityRouter.patch("/:id", validateToken.execute, ValidateBody.execute(opportunityUpdateSchema), (req, res) => opportunityControllers.update(req,res));
 opportunityRouter.delete("/:id", validateToken.execute, (req, res) => opportunityControllers.delete(req,res));
-
 opportunityRouter.use("/", ApplicationRouter);

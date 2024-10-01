@@ -4,7 +4,6 @@ import "express-async-errors";
 import "dotenv/config";
 import express, { json } from "express";
 import helmet from "helmet";
-// import { OpportunityRouter } from "./routes/opportunity.routes";
 import { opportunityRouter } from "./routes/opportunity.routes";
 import { handleErrors } from "./middleware/handleErrors.middleware";
 import { userRoutes } from "./routes/user.routes";

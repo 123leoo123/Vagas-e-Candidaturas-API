@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import { TUserLoginBody, TUserLoginReturn, TUserRegisterBody, TUserReturn, userReturnSchema } from "../schemas/user.schemas";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { prisma } from "../database/prisma";
 import jwt from "jsonwebtoken";
 import { appError } from "../errors/appError";

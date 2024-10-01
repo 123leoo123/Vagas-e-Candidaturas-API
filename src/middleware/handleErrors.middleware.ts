@@ -40,12 +40,8 @@ class Handle {}
 
 enum Options {}
 
-
 handleErrors.execute
 
-
 const error = new handleErrors();
-
-// error.do()
 
 error.undo()
