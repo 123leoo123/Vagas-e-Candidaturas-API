@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRoutes = void 0;
+const express_1 = require("express");
+const tsyringe_1 = require("tsyringe");
+const user_services_1 = require("../services/user.services");
+const validateBody_middleware_1 = require("../middleware/validateBody.middleware");
+const user_schemas_1 = require("../schemas/user.schemas");
+const validateToken_middleware_1 = require("../middleware/validateToken.middleware");
+const user_controllers_1 = require("../controllers/user.controllers");
+const isEmailAlreadyRegistered_1 = require("../middleware/isEmailAlreadyRegistered");
+tsyringe_1.container.registerSingleton("UserServices", user_services_1.UserServices);
+const UserControllers = tsyringe_1.container.resolve(user_controllers_1.userControllers);
+exports.userRoutes = (0, express_1.Router)();
+exports.userRoutes.post("/", isEmailAlreadyRegistered_1.isEmailAlreadyRegistered.execute, validateBody_middleware_1.ValidateBody.execute(user_schemas_1.userRegisterBodySchema), (req, res) => UserControllers.register(req, res));
+exports.userRoutes.post("/login", validateBody_middleware_1.ValidateBody.execute(user_schemas_1.userLoginBodySchema), (req, res) => UserControllers.login(req, res));
+exports.userRoutes.get("/", validateToken_middleware_1.validateToken.execute, (req, res) => UserControllers.getUser(req, res));

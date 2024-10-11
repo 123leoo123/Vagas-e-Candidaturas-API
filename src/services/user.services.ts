@@ -1,11 +1,12 @@
 import { injectable } from "tsyringe";
+import "reflect-metadata";
 import { TUserLoginBody, TUserLoginReturn, TUserRegisterBody, TUserReturn, userReturnSchema } from "../schemas/user.schemas";
 import bcrypt from "bcryptjs";
 import { prisma } from "../database/prisma";
 import jwt from "jsonwebtoken";
 import { appError } from "../errors/appError";
 
-@injectable()
+// @injectable()
 export class UserServices {
     async login(body: TUserLoginBody): Promise<TUserLoginReturn> {
         const user = await prisma.user.findUnique({where: {email: body.email}});

@@ -4,15 +4,19 @@ import "express-async-errors";
 import "dotenv/config";
 import express, { json } from "express";
 import helmet from "helmet";
+import cors from "cors";
 import { opportunityRouter } from "./routes/opportunity.routes";
 import { handleErrors } from "./middleware/handleErrors.middleware";
 import { userRoutes } from "./routes/user.routes";
+import supertest from "supertest";
 
 export const app = express();
 
 console.log(process.env.EXAMPLE)
 
 app.use(json());
+
+app.use(cors());
 
 app.use(helmet());
 
@@ -21,6 +25,8 @@ app.use("/opportunities", opportunityRouter);
 app.use("/users", userRoutes);
 
 app.use(handleErrors.execute);
+
+export const request = supertest(app);
 
 
 
@@ -44,12 +50,4 @@ app.get("/auth", (req, res) => {
   }
 })
 
-app.post("/login", (req, res) => {
-    if (process.env.JWT_SECRET) {
-      const token = jwt.sign({ id: 1}, process.env.JWT_SECRET, { expiresIn: "12h" });
-
-      return res.status(200).json({ acessToken: token });
-    }
-    
-})
 
