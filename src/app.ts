@@ -10,6 +10,7 @@ import { handleErrors } from "./middleware/handleErrors.middleware";
 import { userRoutes } from "./routes/user.routes";
 import supertest from "supertest";
 
+
 export const app = express();
 
 console.log(process.env.EXAMPLE)
