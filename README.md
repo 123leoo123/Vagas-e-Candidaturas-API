@@ -2,7 +2,7 @@
 
 ## Rotas de Usuário
 
-## Registro de usuário POST /users
+###\ Registro de usuário create /POST/users
 
 Padrão de corpo
 
@@ -24,6 +24,36 @@ Padrão de respostas (STATUS 201)
 }
 ```
 
+Possíveis erros
+
+403 Forbidden
+
+```json
+{
+	"message": "Email already registered"
+}
+```
+
+422 Unprocessable Entity
+
+```json
+{
+	"issues": [
+		{
+			"code": "too_small",
+			"minimum": 8,
+			"type": "string",
+			"inclusive": true,
+			"exact": false,
+			"message": "String must contain at least 8 character(s)",
+			"path": [
+				"password"
+			]
+		}
+	],
+	"name": "ZodError"
+}
+```
 
 ### Login POST /users/login
 
@@ -49,21 +79,6 @@ Padrão de resposta (STATUS 200)
 }
 ```
 
-### Retornar usuário GET /users
-
-É necessário autorização para acessar está rota, forneça o token do cabeçalho da requisição 
-
-```json
-{
-	"headers": {
-      "Autorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI3MTIzNzg5LCJleHAiOjE3MjcxMjczODl9.eQd9ssvIC30OT-GKvi5wQryANDFdn8cPV6e1FZobvxo"
-   }
-}
-```
-
-
-Possíveis erros
-
 401 UNAUTHORIZED 
 
 ```json
@@ -77,6 +92,27 @@ Possíveis erros
 ```json
 {
    "message": "User not registered"
+}
+```
+
+### Retornar usuário GET /users
+
+É necessário autorização para acessar está rota, forneça o token do cabeçalho da requisição 
+
+```json
+{
+	"headers": {
+      "Autorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI3MTIzNzg5LCJleHAiOjE3MjcxMjczODl9.eQd9ssvIC30OT-GKvi5wQryANDFdn8cPV6e1FZobvxo"
+   }
+}
+```
+Padrão de resposta (STATUS 200)
+
+```json
+{
+   "id": 1,
+	"name": "usuario1",
+	"email": "user1@mail.com"
 }
 ```
 
@@ -97,7 +133,23 @@ Padrão de resposta (STATUS 201)
 {
    "id": 1,
    "title": "Lorem ipsum",
-   "description": "Lorem ipsum"
+   "description": "Lorem ipsum",
+   "userId": 1
+}
+```
+
+
+
+
+### GET /opportunities/:id
+
+Padrão de resposta (STATUS 200)
+
+```json
+{
+   "id": 1,
+   "title": "DBA Junior Aliexpress",
+   "description": "Sem experiência, é os guri"
 }
 ```
 
@@ -107,25 +159,22 @@ Padrão de resposta (STATUS 200)
 
 ```json
 [
-   {
-      "id": 1,
-      "title": "Lorem ipsum",
-      "description": "Lorem ipsum"
-   }
+	{
+		"id": 1,
+		"title": "DBA Junior Aliexpress",
+		"description": "Sem experiência, é os guri",
+		"userId": 1
+	},
+	{
+		"id": 2,
+		"title": "Motorista de caminhão",
+		"description": "Carteira tipo C",
+		"userId": 1
+	}
 ]
 ```
 
-### GET /opportunities/:id
 
-Padrão de resposta (STATUS 200)
-
-```json
-{
-   "id": 1,
-   "title": "Lorem ipsum",
-   "description": "Lorem ipsum"
-}
-```
 
 Possíveis erros
 
@@ -160,17 +209,7 @@ Padrão de resposta (STATUS 200)
 
 ### DELETE /opportunities/:id
 
-Nenhum corpo de resposta (STATUS 204)
 
-Possíveis erros
-
-404 NOT FOUND
-
-```json
-{
-   "message": "Opportunity not found"
-}
-```
 
 ### POST /opportunities/:id/applications
 
@@ -196,16 +235,6 @@ Padrão de resposta (STATUS 201)
 }
 ```
 
-Possíveis erros
-
-404 NOT FOUND
-
-```json
-{
-   "message": "Opportunity not found"
-}
-```
-
 ### GET /opportunities/:id/applications
 
 Padrão de resposta (STATUS 200)
@@ -221,6 +250,22 @@ Padrão de resposta (STATUS 200)
    }
 ]
 ```
+
+Possíveis erros
+
+Nenhum corpo de resposta (STATUS 204)
+
+404 NOT FOUND
+
+```json
+{
+   "message": "Opportunity not found"
+}
+```
+
+
+
+
 
 Possíveis erros
 

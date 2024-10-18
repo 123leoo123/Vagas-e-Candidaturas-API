@@ -22,3 +22,4 @@ export class ApplicationsControlers {
         return res.status(200).json(response);
     }
 }
+
