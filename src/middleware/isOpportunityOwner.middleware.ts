@@ -15,4 +15,5 @@ export class IsOpportunityOwner{
         }
 
         next();
-    }        }
+    }        
+}
